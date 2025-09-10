@@ -136,6 +136,7 @@ public class ConsoleApp
             {
                 "q" when options.HasFlag(CommonActions.Quit) => CommonActions.Quit,
                 "s" when options.HasFlag(CommonActions.SearchPatrons) => CommonActions.SearchPatrons,
+                "b" when options.HasFlag(CommonActions.SearchBooks) => CommonActions.SearchBooks,
                 "m" when options.HasFlag(CommonActions.RenewPatronMembership) => CommonActions.RenewPatronMembership,
                 "e" when options.HasFlag(CommonActions.ExtendLoanedBook) => CommonActions.ExtendLoanedBook,
                 "r" when options.HasFlag(CommonActions.ReturnLoanedBook) => CommonActions.ReturnLoanedBook,
@@ -166,6 +167,10 @@ public class ConsoleApp
         {
             Console.WriteLine(" - \"m\" to extend patron's membership");
         }
+        if (options.HasFlag(CommonActions.SearchBooks))
+        {
+            Console.WriteLine(" - \"b\" to check for book availability");
+        }
         if (options.HasFlag(CommonActions.SearchPatrons))
         {
             Console.WriteLine(" - \"s\" for new search");
@@ -193,7 +198,7 @@ public class ConsoleApp
             loanNumber++;
         }
 
-        CommonActions options = CommonActions.SearchPatrons | CommonActions.Quit | CommonActions.Select | CommonActions.RenewPatronMembership;
+        CommonActions options = CommonActions.SearchPatrons | CommonActions.Quit | CommonActions.Select | CommonActions.RenewPatronMembership | CommonActions.SearchBooks;
         CommonActions action = ReadInputOptions(options, out int selectedLoanNumber);
         if (action == CommonActions.Select)
         {
@@ -225,8 +230,21 @@ public class ConsoleApp
             selectedPatronDetails = (await _patronRepository.GetPatron(selectedPatronDetails.Id))!;
             return ConsoleState.PatronDetails;
         }
+        else if (action == CommonActions.SearchBooks)
+        {
+            await SearchBooks();
+            return ConsoleState.PatronDetails;
+        }
 
         throw new InvalidOperationException("An input option is not handled.");
+    }
+
+    async Task SearchBooks()
+    {
+        // Placeholder implementation for book search flow.
+        // Implement book search logic (prompt, repository call, display results) as needed.
+        Console.WriteLine("Searching books (not implemented yet)...");
+        await Task.CompletedTask;
     }
 
     async Task<ConsoleState> LoanDetails()
