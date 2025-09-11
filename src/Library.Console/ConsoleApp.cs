@@ -43,6 +43,9 @@ public class ConsoleApp
                 case ConsoleState.LoanDetails:
                     _currentState = await LoanDetails();
                     break;
+                case ConsoleState.Quit:
+                    Console.WriteLine("Exiting application. Goodbye!");
+                    return;
             }
         }
     }
@@ -239,10 +242,12 @@ public class ConsoleApp
         throw new InvalidOperationException("An input option is not handled.");
     }
 
+    /// <summary>
+    /// TODO: Implement book search logic (prompt, repository call, display results).
+    /// </summary>
     async Task SearchBooks()
     {
-        // Placeholder implementation for book search flow.
-        // Implement book search logic (prompt, repository call, display results) as needed.
+        // TODO: Implement book search flow.
         Console.WriteLine("Searching books (not implemented yet)...");
         await Task.CompletedTask;
     }
